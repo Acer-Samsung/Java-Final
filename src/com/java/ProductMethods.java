@@ -40,7 +40,7 @@ public interface ProductMethods {
                             value2.set(2, 30);
                         }
                     }
-                } , 0,  time);
+                }, 0, time);
 
                 timer.schedule(new TimerTask() {
                     @Override
@@ -48,9 +48,44 @@ public interface ProductMethods {
                         System.out.println("Order successfully recieved");
                         timer.cancel();
                     }
-                } , time+1000);
+                }, time + 1000);
+            }
+        }
+    }
+
+    //
+    static void RemoveExpired(HashMap<String, HashMap<String, List<Object>>> allProd) {
+        for (HashMap<String, List<Object>> value : allProd.values()) {
+            for (List<Object> value2 : value.values()) {
+                String da = String.valueOf(value2.get(3));
+                if (Integer.parseInt(da.split(" ")[0]) == 0) {
+                    value2.set(2, 0);
+                    System.out.println(value2.get(0) + " has cleared");
+                    Order(allProd);
+                } else if (Integer.parseInt(da.split(" ")[0]) < 3) {
+                    System.out.println(value2.get(0) + " has only " + da + " to expire");
+                }
+
+                ;
+//                System.out.println(value2.get(0) + " - " + value2.get(3));
+
+            }
+        }
+    }
+
+    static ArrayList<List<Object>> ShowExpired(HashMap<String, HashMap<String, List<Object>>> allProd) {
+        ArrayList<List<Object>> list = new ArrayList<>();
+        for (HashMap<String, List<Object>> value : allProd.values()) {
+            for (List<Object> value2 : value.values()) {
+                String da = String.valueOf(value2.get(3));
+                if (Integer.parseInt(da.split(" ")[0]) <= 5 && Integer.parseInt(da.split(" ")[0]) != 0) {
+                    list.add(value2);
+
+                    //bunday mahsulotlar kop bolishi mumkinligi uchun metod lislarni listini qaytarmoqda
+                }
             }
         }
 
+        return list;
     }
 }
